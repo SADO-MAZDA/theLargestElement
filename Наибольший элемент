@@ -12,11 +12,12 @@ namespace ConsoleApp16
         {
             int minRandomValue = 1;
             int maxRandomValue = 11;
-            int maxValueInArray = (maxRandomValue - 1);
+            int maxValueInArray = int.MaxValue;
             int numberToReplace = 0;
             int quantityChange = 0;
             int quantityCharInColumn = 10;
             int quantityCharInLine = 10;
+            int previusElement = int.MinValue;
             int [,] array = new int[quantityCharInLine, quantityCharInColumn];
             Random random = new Random();
 
@@ -25,27 +26,37 @@ namespace ConsoleApp16
                 for (int j = 0; j < array.GetLength(1); j++)
                 {
                     array[i, j] = random.Next(minRandomValue, maxRandomValue);
-                    Console.Write(array [i,j] + " ");
 
-                    if (array[i, j] == maxValueInArray)
+                    Console.Write(array[i, j] + " ");
+
+                    if (array[i, j] >= previusElement)
                     {
-                        array[i, j] = numberToReplace;
-                        quantityChange++;
+                        previusElement = array[i,j];
+                        maxValueInArray = array[i, j];
                     }
                 }
+
                 Console.WriteLine();
             }
-            Console.WriteLine("\nМаксимальное число  - " + maxValueInArray + "\nКоличество замен числа  (" + maxValueInArray 
-                +") на число (" + numberToReplace +  ")  - " + quantityChange + "\n");
 
             for (int i = 0; i < array.GetLength(0); i++)
             {
                 for (int j = 0; j < array.GetLength(1); j++)
                 {
+                    if (array[i, j] == maxValueInArray)
+                    {
+                        array[i, j] = numberToReplace;
+                        quantityChange++;
+                    }
+
                     Console.Write(array[i, j] + " ");
                 }
+
                 Console.WriteLine();
             }
+
+            Console.WriteLine("\nМаксимальное число  : " + maxValueInArray + "\nКоличество замен числа  (" + maxValueInArray
+               + ") на число (" + numberToReplace + ")  - " + quantityChange + "\n");
         }
     }
 }
